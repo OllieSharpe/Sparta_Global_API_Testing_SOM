@@ -1,8 +1,10 @@
 describe SinglePostcodeService do
 
   before(:all) do
+    @postcode_generator_service = Postcodeio.new.postcode_generator_service
+    @postcode = @postcode_generator_service.get_random_postcode
     @single_postcode_service = Postcodeio.new.single_postcode_service
-    @single_postcode_service.get_single_postcode('B601JA')
+    @single_postcode_service.get_single_postcode(@postcode)
   end
 
   it "should respond with a status message of 200" do

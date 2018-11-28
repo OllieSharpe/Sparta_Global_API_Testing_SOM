@@ -1,9 +1,16 @@
 describe MultiplePostcodeService do
 
   before(:all) do
-    @postcodes_array = ['B601JA', 'SW155FB']
+    @postcode_generator_service = Postcodeio.new.postcode_generator_service
+    @postcodes_array = @postcode_generator_service.get_random_postcodes(3)
     @multiple_postcodes_service = Postcodeio.new.multiple_postcodes_service
     @multiple_postcodes_service.get_multiple_postcodes(@postcodes_array)
+  end
+
+  it "should return the first query as the first postcode in the response" do
+    for i in 0..(@multiple_postcodes_service.get_all_results.length - 1) do
+      expect(@multiple_postcodes_service.get_postcodes_multiple(i).downcase.delete(' ')).to eq(@postcodes_array[i].downcase)
+    end
   end
 
   it "should respond with a status message of 200" do
@@ -11,8 +18,9 @@ describe MultiplePostcodeService do
   end
 
   it "should have a results hash" do
-    expect(@multiple_postcodes_service.get_results(0)).to be_kind_of(Hash)
-    expect(@multiple_postcodes_service.get_results(1)).to be_kind_of(Hash)
+    for i in 0..(@multiple_postcodes_service.get_all_results.length - 1) do
+      expect(@multiple_postcodes_service.get_results(i)).to be_kind_of(Hash)
+    end
   end
 
   it "should return a postcode between 5-7 in length"  do
