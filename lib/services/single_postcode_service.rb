@@ -18,4 +18,8 @@ class SinglePostcodeService
     @single_postcode_data['result']
   end
 
+  def search_single_result_for(search_word)
+    return @single_postcode_data['result']["#{search_word}"]
+  end
+
 end

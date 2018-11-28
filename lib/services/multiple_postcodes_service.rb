@@ -18,4 +18,16 @@ class MultiplePostcodeService
     @multiple_postcodes_data['result'][iterator]['result']
   end
 
+  def search_multiple_results_for(search_word)
+    results_array = []
+    for i in 0..(@multiple_postcodes_data.length - 1)
+      results_array << @multiple_postcodes_data['result'][i]['result']["#{search_word}"]
+    end
+    return results_array
+  end
+
+  def get_postcodes_multiple(iterator)
+    @multiple_postcodes_data['result'][iterator]['result']['postcode']
+  end
+
 end
